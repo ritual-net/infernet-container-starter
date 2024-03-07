@@ -214,7 +214,6 @@ to stop docker-compose environments run this command after your tests
 
 ```
 project=hello-world make stop-environments
-
 ```
 ### Next Steps
 
