@@ -7,3 +7,6 @@ deploy-contracts:
 
 call-contract:
 	$(MAKE) -C ./projects/$(project)/contracts call-contract
+
+stop-environments: 
+	cd deploy && docker-compose down 

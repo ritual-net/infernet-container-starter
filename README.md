@@ -210,6 +210,11 @@ eth_newFilter
 We can see that the address of the `node` matches the address of the node in
 our ritual anvil node.
 
+to stop docker-compose environments run this command after your tests
+
+```
+project=hello-world make stop-environments
+```
 ### Next Steps
 
 To learn more about on-chain requests, check out the following resources:
