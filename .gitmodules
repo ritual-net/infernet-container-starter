@@ -1,0 +1,6 @@
+[submodule "projects/hello-world/contracts/lib/forge-std"]
+	path = projects/hello-world/contracts/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
+[submodule "projects/hello-world/contracts/lib/infernet-sdk"]
+	path = projects/hello-world/contracts/lib/infernet-sdk
+	url = https://github.com/ritual-net/infernet-sdk
