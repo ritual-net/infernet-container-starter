@@ -1,0 +1,30 @@
+# pre-commit workflow
+#
+# Ensures the codebase passes the pre-commit stack.
+
+name: Build Docker Images
+
+on:
+  pull_request:
+    branches:
+      - main
+      - dev
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project: [ "hello-world", "gpt4", "onnx-iris", "prompt-to-nft", "tgi-llm", "torch-iris"]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Run build example container
+        env:
+          project: ${{ matrix.project }}
+          CI: true
+        run: make build-container

@@ -1,9 +1,13 @@
+# OS
+**/.DS_Store
+
 # Byte-compiled / optimized / DLL files
 deploy/config.json
 
 __pycache__/
 *.py[cod]
 *$py
+
 
 # C extensions
 *.so
@@ -14,10 +18,23 @@ build/
 *.egg-info/
 
 # IDE specific files
-.vscode/
-.idea/
+**/.vscode
+**/.idea
 
 # Virtual environment
-venv/
+venv
+.venv/
+*.env
 
-**/.idea
+
+# env files
+**/*.env
+
+# OS Files
+**/.DS_Store
+
+# Multi-deploykey CI
+**/root-config
+
+# sync scripts
+remote_sync

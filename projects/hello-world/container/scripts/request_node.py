@@ -1,9 +1,10 @@
 from time import sleep
+from typing import Any
 
 import requests
 
 
-def hit_server_directly():
+def hit_server_directly() -> None:
     print("hello")
     r = requests.get("http://localhost:3000/")
     print(r.status_code)
@@ -11,7 +12,7 @@ def hit_server_directly():
     print("server response", r.text)
 
 
-def poll_until_complete(id: str):
+def poll_until_complete(id: str) -> Any:
     status = "running"
     r = None
     while status == "running":
@@ -24,11 +25,12 @@ def poll_until_complete(id: str):
         status = r.get("status")
         print("status", status)
         if status != "running":
-            return r
+            break
         sleep(1)
+    return r
 
 
-def create_job_through_node():
+def create_job_through_node() -> None:
     r = requests.post(
         "http://localhost:4000/api/jobs",
         json={

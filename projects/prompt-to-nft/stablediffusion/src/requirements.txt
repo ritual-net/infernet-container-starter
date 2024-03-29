@@ -1,0 +1,10 @@
+diffusers~=0.19
+invisible_watermark~=0.1
+transformers==4.36
+accelerate~=0.21
+safetensors~=0.3
+Quart==0.19.4
+jmespath==1.0.1
+huggingface-hub==0.20.3
+infernet_ml==0.1.0
+PyArweave @ git+https://github.com/ritual-net/pyarweave.git

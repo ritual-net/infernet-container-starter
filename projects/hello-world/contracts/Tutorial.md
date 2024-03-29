@@ -218,7 +218,7 @@ PRIVATE_KEY=0x5de4111afa1a4b94908f83103eb1f1706367c2e68ca870fc3fb9a804cdab365a \
 ```
 
 ### Using a `Makefile`
-To make running these commands easier, we can add them to a `Makefile`. This allows 
+To make running these commands easier, we can add them to a `Makefile`. This allows
 us to run `make deploy` and `make call` instead of typing out the full command every time.
 
 Refer to [this project's Makefile](./Makefile) for an example.
@@ -226,4 +226,4 @@ Refer to [this project's Makefile](./Makefile) for an example.
 ### 🎉 Done!
 
 Congratulations! You've successfully created a contract that requests compute from
-our `hello-world` container. 
+our `hello-world` container.

@@ -1,0 +1,87 @@
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.0.289
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+
+  - repo: https://github.com/psf/black
+    rev: 23.9.1
+    hooks:
+      - id: black
+
+  - repo: local
+    hooks:
+      - id: mypy-hello-world
+        name: mypy hello-world
+        entry: mypy --strict
+        files: ^projects/hello-world/container/
+        language: system
+        types: [python]
+
+  - repo: local
+    hooks:
+      - id: mypy-torch-iris
+        name: mypy torch-iris
+        entry: mypy --strict
+        files: ^projects/torch-iris/container/
+        language: system
+        types: [python]
+
+  - repo: local
+    hooks:
+      - id: mypy-onnx-iris
+        name: mypy onnx-iris
+        entry: mypy --strict
+        files: ^projects/onnx-iris/container/
+        language: system
+        types: [python]
+
+
+  - repo: local
+    hooks:
+      - id: mypy-tgi-llm-container
+        name: mypy tgi-llm container
+        entry: mypy --strict
+        files: ^projects/tgi-llm/container
+        language: system
+        types: [python]
+
+  - repo: local
+    hooks:
+      - id: mypy-tgi-llm-ui
+        name: mypy tgi-llm ui
+        entry: mypy --strict
+        files: ^projects/tgi-llm/ui
+        language: system
+        types: [python]
+
+  - repo: local
+    hooks:
+      - id: mypy-gpt4
+        name: mypy gpt4
+        entry: mypy --strict
+        files: ^projects/gpt4/container
+        language: system
+        types: [python]
+
+  - repo: local
+    hooks:
+      - id: mypy-prompt-to-nft
+        name: mypy prompt-to-nft
+        entry: mypy --strict
+        files: ^projects/prompt-to-nft/container
+        language: system
+        types: [python]
+
+  # Default pre-commit hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0
+    hooks:
+      # Ensure EOF exists
+      - id: end-of-file-fixer
+      # Prevent adding large files
+      - id: check-added-large-files
+        args: ["--maxkb=5000"]
+      # Newline at end of file
+      - id: trailing-whitespace

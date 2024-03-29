@@ -4,15 +4,20 @@ WORKDIR /app
 
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
+ENV PIP_NO_CACHE_DIR 1
+ENV RUNTIME docker
 ENV PYTHONPATH src
 
-WORKDIR /app
-
 RUN apt-get update
+RUN apt-get install -y git curl
+
+# install uv
+ADD --chmod=755 https://astral.sh/uv/install.sh /install.sh
+RUN /install.sh && rm /install.sh
 
 COPY src/requirements.txt .
 
-RUN pip install --upgrade pip && pip install -r requirements.txt
+RUN /root/.cargo/bin/uv pip install --system --no-cache -r requirements.txt
 
 COPY src src
 
