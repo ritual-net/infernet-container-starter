@@ -2,7 +2,7 @@ build-container:
 	$(MAKE) -C ./projects/$(project)/container build
 
 remove-containers:
-	docker compose -f deploy/docker-compose.yaml down || true
+	docker-compose -f deploy/docker-compose.yaml down || true
 	docker stop $(project) anvil-node && docker rm $(project) anvil-node || true
 
 build-multiplatform:
@@ -11,8 +11,8 @@ build-multiplatform:
 deploy-container:
 	$(MAKE) remove-containers
 	cp ./projects/$(project)/container/config.json deploy/config.json
-	docker compose -f deploy/docker-compose.yaml up -d
-	docker compose -f deploy/docker-compose.yaml logs -f
+	docker-compose -f deploy/docker-compose.yaml up -d
+	docker-compose -f deploy/docker-compose.yaml logs -f
 
 deploy-contracts:
 	$(MAKE) -C ./projects/$(project)/contracts deploy
