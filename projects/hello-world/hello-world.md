@@ -78,7 +78,7 @@ This project already comes with a pre-filled config file. The config file for th
 [here](container/config.json):
 
 ```bash
-projects/hello-world/config.json
+projects/hello-world/container/config.json
 ```
 
 ## Requesting an on-chain job
