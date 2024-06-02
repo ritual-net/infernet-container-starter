@@ -2,4 +2,4 @@ quart==0.19.4
 infernet_ml==0.1.0
 PyArweave @ git+https://github.com/ritual-net/pyarweave.git
 web3==6.15.0
-tqdm==4.66.1
+tqdm==4.66.3

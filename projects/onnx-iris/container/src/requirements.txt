@@ -2,6 +2,6 @@ quart==0.19.4
 infernet_ml==0.1.0
 PyArweave @ git+https://github.com/ritual-net/pyarweave.git
 web3==6.15.0
-onnx==1.15.0
+onnx==1.16.0
 onnxruntime==1.16.3
 torch==2.1.2

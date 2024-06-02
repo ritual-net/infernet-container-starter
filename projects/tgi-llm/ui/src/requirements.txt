@@ -1,4 +1,4 @@
 python-dotenv==1.0.0
-gradio==3.47.1
+gradio==4.19.2
 huggingface-hub==0.17.3
-text-generation==0.6.1
+text-generation==0.7.0
