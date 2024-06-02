@@ -2,7 +2,7 @@ gunicorn==21.2.0
 mypy==1.8.0
 mypy-extensions==1.0.0
 packaging==23.2
-requests==2.31.0
+requests==2.32.2
 ruff==0.1.13
 types-click==7.1.8
 types-Flask==1.1.6
