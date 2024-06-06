@@ -10,7 +10,7 @@ contract CallContract is Script {
         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
         vm.startBroadcast(deployerPrivateKey);
 
-        SaysGM saysGm = SaysGM(0x663F3ad617193148711d28f5334eE4Ed07016602);
+        SaysGM saysGm = SaysGM(0x13D69Cf7d6CE4218F646B759Dcf334D82c023d8e);
 
         saysGm.sayGM();
 

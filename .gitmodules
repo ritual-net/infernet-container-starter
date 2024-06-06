@@ -3,16 +3,16 @@
 	url = https://github.com/foundry-rs/forge-std
 [submodule "projects/hello-world/contracts/lib/infernet-sdk"]
 	path = projects/hello-world/contracts/lib/infernet-sdk
-	url = https://github.com/ritual-net/infernet-sdk
+	url = https://github.com/ritual-net/infernet-sdk.git
 [submodule "projects/torch-iris/contracts/lib/infernet-sdk"]
 	path = projects/torch-iris/contracts/lib/infernet-sdk
-	url = https://github.com/ritual-net/infernet-sdk
+	url = https://github.com/ritual-net/infernet-sdk.git
 [submodule "projects/torch-iris/contracts/lib/forge-std"]
 	path = projects/torch-iris/contracts/lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
 [submodule "projects/onnx-iris/contracts/lib/infernet-sdk"]
 	path = projects/onnx-iris/contracts/lib/infernet-sdk
-	url = https://github.com/ritual-net/infernet-sdk
+	url = https://github.com/ritual-net/infernet-sdk.git
 [submodule "projects/onnx-iris/contracts/lib/forge-std"]
 	path = projects/onnx-iris/contracts/lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
@@ -21,13 +21,13 @@
 	url = https://github.com/foundry-rs/forge-std
 [submodule "projects/prompt-to-nft/contracts/lib/infernet-sdk"]
 	path = projects/prompt-to-nft/contracts/lib/infernet-sdk
-	url = https://github.com/ritual-net/infernet-sdk
+	url = https://github.com/ritual-net/infernet-sdk.git
 [submodule "projects/prompt-to-nft/contracts/lib/solmate"]
 	path = projects/prompt-to-nft/contracts/lib/solmate
 	url = https://github.com/transmissions11/solmate
 [submodule "projects/gpt4/contracts/lib/infernet-sdk"]
 	path = projects/gpt4/contracts/lib/infernet-sdk
-	url = https://github.com/ritual-net/infernet-sdk
+	url = https://github.com/ritual-net/infernet-sdk.git
 [submodule "projects/gpt4/contracts/lib/forge-std"]
 	path = projects/gpt4/contracts/lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
@@ -36,4 +36,10 @@
 	url = https://github.com/foundry-rs/forge-std
 [submodule "projects/tgi-llm/contracts/lib/infernet-sdk"]
 	path = projects/tgi-llm/contracts/lib/infernet-sdk
+	url = https://github.com/ritual-net/infernet-sdk.git
+[submodule "projects/payment/contracts/lib/forge-std"]
+	path = projects/payment/contracts/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
+[submodule "projects/payment/contracts/lib/infernet-sdk"]
+	path = projects/payment/contracts/lib/infernet-sdk
 	url = https://github.com/ritual-net/infernet-sdk

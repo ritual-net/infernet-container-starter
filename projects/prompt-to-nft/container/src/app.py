@@ -5,9 +5,9 @@ from typing import Any, cast
 
 import aiohttp
 from eth_abi import decode, encode  # type: ignore
-from infernet_ml.utils.arweave import upload, load_wallet
-from infernet_ml.utils.service_models import InfernetInput, InfernetInputSource
+from infernet_ml.utils.service_models import InfernetInput, JobLocation
 from quart import Quart, request
+from ritual_arweave.file_manager import FileManager
 
 log = logging.getLogger(__name__)
 
@@ -29,7 +29,6 @@ async def run_inference(prompt: str, output_path: str) -> None:
 def ensure_env_vars() -> None:
     if not os.getenv("IMAGE_GEN_SERVICE_URL"):
         raise ValueError("IMAGE_GEN_SERVICE_URL environment variable not set")
-    load_wallet()
 
 
 def create_app() -> Quart:
@@ -54,50 +53,59 @@ def create_app() -> Quart:
         infernet_input: InfernetInput = InfernetInput(**req_data)
         temp_file = "image.png"
 
-        if infernet_input.source == InfernetInputSource.OFFCHAIN:
-            prompt: str = cast(dict[str, str], infernet_input.data)["prompt"]
-        else:
-            # On-chain requests are sent as a generalized hex-string which we will
-            # decode to the appropriate format.
-            (prompt, mintTo) = decode(
-                ["string", "address"], bytes.fromhex(cast(str, infernet_input.data))
-            )
-            log.info("mintTo: %s", mintTo)
-            log.info("prompt: %s", prompt)
+        match infernet_input:
+            case InfernetInput(source=JobLocation.OFFCHAIN):
+                prompt: str = cast(dict[str, str], infernet_input.data)["prompt"]
+            case InfernetInput(source=JobLocation.ONCHAIN):
+                # On-chain requests are sent as a generalized hex-string which we will
+                # decode to the appropriate format.
+                (prompt, mintTo) = decode(
+                    ["string", "address"], bytes.fromhex(cast(str, infernet_input.data))
+                )
+                log.info("mintTo: %s", mintTo)
+                log.info("prompt: %s", prompt)
+            case _:
+                raise ValueError("Invalid source")
 
         # run the inference and download the image to a temp file
         await run_inference(prompt, temp_file)
 
-        tx = upload(Path(temp_file), {"Content-Type": "image/png"})
+        tx = FileManager(wallet_path=os.environ["ARWEAVE_WALLET_FILE_PATH"]).upload(
+            Path(temp_file), {"Content-Type": "image/png"}
+        )
 
-        if infernet_input.source == InfernetInputSource.OFFCHAIN:
-            """
-            In case of an off-chain request, the result is returned as is.
-            """
-            return {
-                "prompt": prompt,
-                "hash": tx.id,
-                "image_url": f"https://arweave.net/{tx.id}",
-            }
-        else:
-            """
-            In case of an on-chain request, the result is returned in the format:
-            {
-                "raw_input": str,
-                "processed_input": str,
-                "raw_output": str,
-                "processed_output": str,
-                "proof": str,
-            }
-            refer to: https://docs.ritual.net/infernet/node/containers for more info.
-            """
-            return {
-                "raw_input": infernet_input.data,
-                "processed_input": "",
-                "raw_output": encode(["string"], [tx.id]).hex(),
-                "processed_output": "",
-                "proof": "",
-            }
+        match infernet_input:
+            case InfernetInput(destination=JobLocation.OFFCHAIN):
+                """
+                In case of an off-chain request, the result is returned as is.
+                """
+                return {
+                    "prompt": prompt,
+                    "hash": tx.id,
+                    "image_url": f"https://arweave.net/{tx.id}",
+                }
+            case InfernetInput(destination=JobLocation.ONCHAIN):
+                """
+                In case of an on-chain request, the result is returned in the format:
+                {
+                    "raw_input": str,
+                    "processed_input": str,
+                    "raw_output": str,
+                    "processed_output": str,
+                    "proof": str,
+                }
+                refer to: https://docs.ritual.net/infernet/node/containers for more
+                info.
+                """
+                return {
+                    "raw_input": infernet_input.data,
+                    "processed_input": "",
+                    "raw_output": encode(["string"], [tx.id]).hex(),
+                    "processed_output": "",
+                    "proof": "",
+                }
+            case _:
+                raise ValueError("Invalid destination")
 
     return app
 

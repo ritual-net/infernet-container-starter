@@ -58,7 +58,7 @@ import {console2} from "forge-std/console2.sol";
 import {CallbackConsumer} from "infernet-sdk/consumer/Callback.sol";
 
 contract SaysGM is CallbackConsumer {
-    constructor(address coordinator) CallbackConsumer(coordinator) {}
+    constructor(address registry) CallbackConsumer(registry) {}
 
     function sayGM() public {
         _requestCompute(
@@ -128,9 +128,9 @@ contract Deploy is Script {
         address deployerAddress = vm.addr(deployerPrivateKey);
         console2.log("Loaded deployer: ", deployerAddress);
 
-        address coordinator = 0x5FbDB2315678afecb367f032d93F642f64180aa3;
+        address registry = 0x663F3ad617193148711d28f5334eE4Ed07016602;
         // Create consumer
-        SaysGM saysGm = new SaysGM(coordinator);
+        SaysGM saysGm = new SaysGM(registry);
         console2.log("Deployed SaysHello: ", address(saysGm));
 
         // Execute
@@ -160,7 +160,7 @@ contract CallContract is Script {
         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
         vm.startBroadcast(deployerPrivateKey);
 
-        SaysGM saysGm = SaysGM(0x663F3ad617193148711d28f5334eE4Ed07016602);
+        SaysGM saysGm = SaysGM(0x13D69Cf7d6CE4218F646B759Dcf334D82c023d8e);
 
         saysGm.sayGM();
 

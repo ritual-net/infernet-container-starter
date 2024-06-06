@@ -16,5 +16,5 @@ make run
 ## Test the Container
 ```bash
 curl -X POST localhost:3000/service_output -H "Content-Type: application/json" \
-  -d '{"source": 1, "data": {"text": "can shrimps actually fry rice?"}}'
+  -d '{"source": 1, "data": {"prompt": "can shrimps actually fry rice?"}}'
 ```

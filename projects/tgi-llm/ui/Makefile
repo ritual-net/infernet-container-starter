@@ -5,7 +5,7 @@ TAG := $(DOCKER_ORG)/example-$(EXAMPLE_NAME)-infernet:latest
 .phony: build run publish
 
 build:
-	@docker build -t $(TAG) .
+	@docker build -t $(TAG) --build-arg index_url=$(index_url) .
 
 run: build
 	docker run --env-file ./gradio_ui.env -p 3001:7860 $(TAG)

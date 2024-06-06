@@ -78,7 +78,7 @@ This project already comes with a pre-filled config file. The config file for th
 [here](container/config.json):
 
 ```bash
-projects/hello-world/config.json
+projects/hello-world/container/config.json
 ```
 
 ## Requesting an on-chain job
@@ -92,7 +92,7 @@ We already have a public [anvil node](https://hub.docker.com/r/ritualnetwork/inf
 corresponding infernet sdk contracts deployed, along with a node that has
 registered itself to listen to on-chain subscription events.
 
-* Coordinator Address: `0x5FbDB2315678afecb367f032d93F642f64180aa3`
+* Registry Address: `0x663F3ad617193148711d28f5334eE4Ed07016602`
 * Node Address: `0x70997970C51812dc3A010C7d01b50e0d17dc79C8` (This is the second account in the anvil's accounts.)
 
 ### Deploying Infernet Node & Infernet's Anvil Testnet
@@ -140,7 +140,7 @@ eth_sendRawTransaction
 eth_getTransactionReceipt
 
     Transaction: 0x23ca6b1d1823ad5af175c207c2505112f60038fc000e1e22509816fa29a3afd6
-    Contract created: 0x663f3ad617193148711d28f5334ee4ed07016602
+    Contract created: 0x13D69Cf7d6CE4218F646B759Dcf334D82c023d8e
     Gas used: 476669
 
     Block Number: 1
@@ -152,7 +152,7 @@ eth_getTransactionReceipt
 eth_blockNumber
 ```
 
-We can see that a new contract has been created at `0x663f3ad617193148711d28f5334ee4ed07016602`.
+We can see that a new contract has been created at `0x13D69Cf7d6CE4218F646B759Dcf334D82c023d8e`.
 That's the address of the `SaysGM` contract.
 
 ### Calling the contract

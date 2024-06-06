@@ -1,0 +1,20 @@
+[project]
+name = "infernet-container-starter"
+version = "1.0.0"
+description = "A repository of infernet examples"
+authors = [
+    { name = "ritual", email = "hello@ritual.net" }
+]
+
+readme = "README.md"
+requires-python = ">= 3.11"
+
+[tool.mypy]
+exclude = ['**/venv', '**/.venv']
+
+[tool.ruff]
+line-length = 89
+
+[tool.isort]
+profile = "black"
+skip = [".venv", "venv", ".gitignore"]

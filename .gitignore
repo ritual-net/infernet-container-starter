@@ -38,3 +38,10 @@ venv
 
 # sync scripts
 remote_sync
+
+# forge generated files
+**/broadcast
+**/out
+
+# secrets
+*-key.json

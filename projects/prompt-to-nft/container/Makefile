@@ -9,7 +9,7 @@ ifdef CI
 	mkdir -p wallet # in CI we don't have a wallet directory. This enables to bypass that and ensure that the image
 	# is built successfully
 endif
-	@docker build -t $(TAG) .
+	@docker build -t $(TAG) --build-arg index_url=$(index_url) .
 
 wallet_dir ?= /app/wallet
 

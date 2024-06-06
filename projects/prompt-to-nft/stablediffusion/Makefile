@@ -5,7 +5,7 @@ TAG := $(DOCKER_ORG)/example-$(EXAMPLE_NAME)-infernet:latest
 .phony: build run build-multiplatform
 
 build:
-	@docker build -t $(TAG) .
+	@docker build -t $(TAG) --build-arg index_url=$(index_url) .
 
 port_mapping ?= 0.0.0.0:3002:3000
 

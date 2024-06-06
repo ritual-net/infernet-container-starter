@@ -1,5 +1,9 @@
-build-container:
-	$(MAKE) -C ./projects/$(project)/container build
+include internal.mk
+
+index_url ?= ''
+
+build-container: get_index_url
+	$(MAKE) -C ./projects/$(project)/container build index_url=$(index_url)
 
 remove-containers:
 	docker compose -f deploy/docker-compose.yaml down || true
@@ -8,10 +12,18 @@ remove-containers:
 build-multiplatform:
 	$(MAKE) -C ./projects/$(project)/container build-multiplatform
 
-deploy-container:
-	$(MAKE) remove-containers
+deploy-container: stop-container
 	cp ./projects/$(project)/container/config.json deploy/config.json
 	docker compose -f deploy/docker-compose.yaml up -d
+	docker logs infernet-node -f
+
+stop-container:
+	docker compose -f deploy/docker-compose.yaml kill || true
+	docker compose -f deploy/docker-compose.yaml rm -f || true
+	docker kill $(project) || true
+	docker rm $(project) || true
+
+watch-logs:
 	docker compose -f deploy/docker-compose.yaml logs -f
 
 deploy-contracts:

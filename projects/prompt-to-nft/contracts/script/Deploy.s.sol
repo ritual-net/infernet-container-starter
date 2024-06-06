@@ -14,9 +14,9 @@ contract Deploy is Script {
         address deployerAddress = vm.addr(deployerPrivateKey);
         console2.log("Loaded deployer: ", deployerAddress);
 
-        address coordinator = 0x5FbDB2315678afecb367f032d93F642f64180aa3;
+        address registry = 0x663F3ad617193148711d28f5334eE4Ed07016602;
         // Create consumer
-        DiffusionNFT nft = new DiffusionNFT(coordinator);
+        DiffusionNFT nft = new DiffusionNFT(registry);
         console2.log("Deployed IrisClassifier: ", address(nft));
 
         // Execute

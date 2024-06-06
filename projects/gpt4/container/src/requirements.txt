@@ -1,5 +1,4 @@
 quart==0.19.4
-infernet_ml==0.1.0
-PyArweave @ git+https://github.com/ritual-net/pyarweave.git
+infernet-ml==1.0.0
+infernet-ml[css_inference]==1.0.0
 web3==6.15.0
-retry2==0.9.5

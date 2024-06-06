@@ -195,7 +195,7 @@ In your anvil logs you should see the following:
 eth_getTransactionReceipt
 
     Transaction: 0xeed605eacdace39a48635f6d14215b386523766f80a113b4484f542d862889a4
-    Contract created: 0x663f3ad617193148711d28f5334ee4ed07016602
+    Contract created: 0x13D69Cf7d6CE4218F646B759Dcf334D82c023d8e
     Gas used: 714269
 
     Block Number: 1
@@ -206,7 +206,7 @@ eth_blockNumber
 ```
 
 beautiful, we can see that a new contract has been created
-at `0x663f3ad617193148711d28f5334ee4ed07016602`. That's the address of
+at `0x663F3ad617193148711d28f5334eE4Ed07016602`. That's the address of
 the `IrisClassifier` contract. We are now going to call this contract. To do so,
 we are using
 the [CallContract.s.sol](contracts/script/CallContract.s.sol)

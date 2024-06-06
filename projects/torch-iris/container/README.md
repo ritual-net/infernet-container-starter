@@ -8,9 +8,9 @@ repository.
 ## Overview
 
 We're making use of
-the [TorchInferenceWorkflow](https://github.com/ritual-net/infernet-ml-internal/blob/main/src/ml/workflows/inference/torch_inference_workflow.py)
+the [TorchInferenceWorkflow](https://github.com/ritual-net/infernet-ml/blob/main/src/ml/workflows/inference/torch_inference_workflow.py)
 class to run the model. This is one of many workflows that we currently support in our
-[infernet-ml](https://github.com/ritual-net/infernet-ml-internal). Consult the library's
+[infernet-ml](https://github.com/ritual-net/infernet-ml). Consult the library's
 documentation for more info on workflows that
 are supported.
 

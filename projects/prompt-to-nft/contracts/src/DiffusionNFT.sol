@@ -11,10 +11,18 @@ contract DiffusionNFT is CallbackConsumer, ERC721 {
         "|  _  /  | |    | |  | |  | |/ /\\ \\ | |\n" "| | \\ \\ _| |_   | |  | |__| / ____ \\| |____\n"
         "|_|  \\_\\_____|  |_|   \\____/_/    \\_\\______|\n\n";
 
-    constructor(address coordinator) CallbackConsumer(coordinator) ERC721("DiffusionNFT", "DN") {}
+    constructor(address registry) CallbackConsumer(registry) ERC721("DiffusionNFT", "DN") {}
 
     function mint(string memory prompt, address to) public {
-        _requestCompute("prompt-to-nft", abi.encode(prompt, to), 20 gwei, 1_000_000, 1);
+        _requestCompute(
+            "prompt-to-nft",
+            abi.encode(prompt, to),
+            1, // redundancy
+            address(0), // paymentToken
+            0, // paymentAmount
+            address(0), // wallet
+            address(0) // prover
+        );
     }
 
     uint256 public counter = 0;
@@ -38,7 +46,6 @@ contract DiffusionNFT is CallbackConsumer, ERC721 {
         return collection;
     }
 
-
     function _receiveCompute(
         uint32 subscriptionId,
         uint32 interval,
@@ -46,7 +53,9 @@ contract DiffusionNFT is CallbackConsumer, ERC721 {
         address node,
         bytes calldata input,
         bytes calldata output,
-        bytes calldata proof
+        bytes calldata proof,
+        bytes32 containerId,
+        uint256 index
     ) internal override {
         console2.log(EXTREMELY_COOL_BANNER);
         (bytes memory raw_output, bytes memory processed_output) = abi.decode(output, (bytes, bytes));

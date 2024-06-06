@@ -5,6 +5,8 @@ WORKDIR /app
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONPATH src
+ARG index_url
+ENV UV_EXTRA_INDEX_URL ${index_url}
 
 WORKDIR /app
 
@@ -12,7 +14,8 @@ RUN apt-get update
 RUN apt-get install -y git curl ffmpeg libsm6 libxext6
 
 # install uv
-ADD --chmod=755 https://astral.sh/uv/install.sh /install.sh
+ADD https://astral.sh/uv/install.sh /install.sh
+RUN chmod 755 /install.sh
 RUN /install.sh && rm /install.sh
 
 COPY src/requirements.txt .

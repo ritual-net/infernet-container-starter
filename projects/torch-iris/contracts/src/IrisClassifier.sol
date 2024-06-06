@@ -14,7 +14,7 @@ contract IrisClassifier is CallbackConsumer {
     "| | \\ \\ _| |_   | |  | |__| / ____ \\| |____\n"
     "|_|  \\_\\_____|  |_|   \\____/_/    \\_\\______|\n\n";
 
-    constructor(address coordinator) CallbackConsumer(coordinator) {}
+    constructor(address registry) CallbackConsumer(registry) {}
 
     function classifyIris() public {
         /// @dev Iris data is in the following format:
@@ -38,9 +38,11 @@ contract IrisClassifier is CallbackConsumer {
         _requestCompute(
             "torch-iris",
             abi.encode(iris_data),
-            20 gwei,
-            1_000_000,
-            1
+            1, // redundancy
+            address(0), // paymentToken
+            0, // paymentAmount
+            address(0), // wallet
+            address(0) // prover
         );
     }
 
@@ -51,7 +53,9 @@ contract IrisClassifier is CallbackConsumer {
         address node,
         bytes calldata input,
         bytes calldata output,
-        bytes calldata proof
+        bytes calldata proof,
+        bytes32 containerId,
+        uint256 index
     ) internal override {
         console2.log(EXTREMELY_COOL_BANNER);
         (bytes memory raw_output, bytes memory processed_output) = abi.decode(output, (bytes, bytes));

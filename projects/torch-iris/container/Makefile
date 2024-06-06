@@ -5,7 +5,7 @@ TAG := $(DOCKER_ORG)/example-$(EXAMPLE_NAME)-infernet:latest
 .phony: build run
 
 build:
-	@docker build -t $(TAG) .
+	@docker build -t $(TAG) --build-arg index_url=$(index_url) .
 
 run:
 	docker run -p 3000:3000 $(TAG)

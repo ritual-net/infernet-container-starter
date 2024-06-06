@@ -129,7 +129,7 @@ curl -X GET http://127.0.0.1:4000/api/jobs\?id\=cab6eea8-8b1e-4144-9a70-f905c5ef
 And if you have `jq` installed and piped the last output to a file, you can instead run:
 
 ```bash
-curl -X GET "http://127.0.0.1:4000/api/jobs?id=$(cat last-request.uuid)" | jq .
+curl -X GET "http://127.0.0.1:4000/api/jobs?id=$(cat last-job.uuid)" | jq .
 # returns something like:
 [
   {

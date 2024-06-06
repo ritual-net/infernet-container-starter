@@ -5,15 +5,17 @@ import {console2} from "forge-std/console2.sol";
 import {CallbackConsumer} from "infernet-sdk/consumer/Callback.sol";
 
 contract SaysGM is CallbackConsumer {
-    constructor(address coordinator) CallbackConsumer(coordinator) {}
+    constructor(address registry) CallbackConsumer(registry) {}
 
     function sayGM() public {
         _requestCompute(
             "hello-world",
             bytes("Good morning!"),
-            20 gwei,
-            1_000_000,
-            1
+            1, // redundancy
+            address(0), // paymentToken
+            0, // paymentAmount
+            address(0), // wallet
+            address(0) // prover
         );
     }
 
@@ -24,7 +26,9 @@ contract SaysGM is CallbackConsumer {
         address node,
         bytes calldata input,
         bytes calldata output,
-        bytes calldata proof
+        bytes calldata proof,
+        bytes32 containerId,
+        uint256 index
     ) internal override {
         console2.log("\n\n"
         "_____  _____ _______ _    _         _\n"
@@ -43,6 +47,8 @@ contract SaysGM is CallbackConsumer {
         console2.logBytes(input);
         console2.log("output:");
         console2.logBytes(output);
+        (string memory decoded)= abi.decode(output, (string));
+        console2.log("decoded output: ", decoded);
         console2.log("proof:");
         console2.logBytes(proof);
     }

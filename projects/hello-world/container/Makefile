@@ -4,7 +4,7 @@ TAG := $(DOCKER_ORG)/hello-world-infernet:latest
 .phony: build run publish
 
 build:
-	@docker build -t $(TAG) .
+	@docker build -t $(TAG) --build-arg index_url=$(index_url) .
 
 update-tag:
 	jq  ".containers[0].image = \"$(TAG)\"" config.json > updated_config.json && mv updated_config.json config.json

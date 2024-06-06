@@ -334,7 +334,7 @@ Notice that in [the step above](#check-the-running-containers) we have an Anvil 
 
 By default, the [`anvil-node`](https://hub.docker.com/r/ritualnetwork/infernet-anvil) image used deploys the
 [Infernet SDK](https://docs.ritual.net/infernet/sdk/introduction) and other relevant contracts for you:
-- Coordinator: `0x5FbDB2315678afecb367f032d93F642f64180aa3`
+- Coordinator: `0x663F3ad617193148711d28f5334eE4Ed07016602`
 - Primary node: `0x70997970C51812dc3A010C7d01b50e0d17dc79C8`
 
 ### Deploy our `Prompter` smart contract
@@ -367,7 +367,7 @@ You should expect to see similar Anvil logs:
 eth_getTransactionReceipt
 
 Transaction: 0x17a9d17cc515d39eef26b6a9427e04ed6f7ce6572d9756c07305c2df78d93ffe
-Contract created: 0x663f3ad617193148711d28f5334ee4ed07016602
+Contract created: 0x13D69Cf7d6CE4218F646B759Dcf334D82c023d8e
 Gas used: 731312
 
 Block Number: 1
@@ -378,7 +378,7 @@ eth_getTransactionByHash
 ```
 
 From our logs, we can see that the `Prompter` contract has been deployed to address
-`0x663f3ad617193148711d28f5334ee4ed07016602`.
+`0x13D69Cf7d6CE4218F646B759Dcf334D82c023d8e`.
 
 ### Call the contract
 
