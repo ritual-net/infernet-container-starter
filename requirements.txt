@@ -2,7 +2,7 @@ gunicorn==22.0.0
 mypy==1.8.0
 mypy-extensions==1.0.0
 packaging==23.2
-requests==2.32.0
+requests==2.32.3
 ruff==0.1.13
 types-click==7.1.8
 types-Flask==1.1.6
@@ -19,6 +19,6 @@ infernet-ml[onnx_inference]==1.0.0
 infernet-ml[css_inference]==1.0.0
 torch==2.2.1
 web3==6.15.0
-onnx==1.16.0
+onnx==1.16.1
 onnxruntime==1.17.1
 pre-commit==2.15.0

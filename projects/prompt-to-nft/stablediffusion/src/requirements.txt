@@ -1,6 +1,6 @@
 diffusers~=0.19
 invisible_watermark~=0.1
-transformers==4.38.0
+transformers==4.41.2
 accelerate~=0.21
 safetensors~=0.3
 Quart==0.19.4
