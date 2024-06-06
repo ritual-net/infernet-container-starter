@@ -2,7 +2,7 @@ include internal.mk
 
 index_url ?= ''
 
-build-container: get_index_url
+build-container:
 	$(MAKE) -C ./projects/$(project)/container build index_url=$(index_url)
 
 remove-containers:
