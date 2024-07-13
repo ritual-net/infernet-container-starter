@@ -11,6 +11,10 @@
         "wallet": {
             "max_gas_limit": 4000000,
             "private_key": "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d"
+        },
+        "snapshot_sync": {
+        "sleep": 3,
+        "batch_size": 100
         }
     },
     "startup_wait": 1.0,
@@ -22,11 +26,7 @@
         "host": "redis",
         "port": 6379
     },
-    "forward_stats": true,
-    "snapshot_sync": {
-        "sleep": 3,
-        "batch_size": 100
-    },
+    "forward_stats": true,    
     "containers": [
         {
             "id": "hello-world",
