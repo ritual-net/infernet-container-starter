@@ -1,16 +1,26 @@
 {
     "log_path": "infernet_node.log",
     "server": {
-        "port": 4000
+        "port": 4000,
+        "rate_limit": {
+            "num_requests": 100,
+            "period": 100
+        }
     },
     "chain": {
         "enabled": true,
-        "trail_head_blocks": 0,
+        "trail_head_blocks": 3,
         "rpc_url": "http://host.docker.internal:8545",
-        "registry_address": "0x663F3ad617193148711d28f5334eE4Ed07016602",
+        "registry_address": "0x3B1554f346DFe5c482Bb4BA31b880c1C18412170",
         "wallet": {
             "max_gas_limit": 4000000,
-            "private_key": "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d"
+            "private_key": "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d",
+            "payment_address": "",
+            "allowed_sim_errors": []
+        },
+        "snapshot_sync": {
+            "sleep": 3,
+            "batch_size": 100
         }
     },
     "startup_wait": 1.0,
@@ -23,10 +33,6 @@
         "port": 6379
     },
     "forward_stats": true,
-    "snapshot_sync": {
-        "sleep": 3,
-        "batch_size": 100
-    },
     "containers": [
         {
             "id": "torch-iris",
@@ -38,7 +44,9 @@
             "allowed_ips": [],
             "command": "--bind=0.0.0.0:3000 --workers=2",
             "env": {},
-            "accepted_payments": {}
+            "volumes": [],
+            "accepted_payments": {},
+            "generates_proofs": false
         }
     ]
 }
