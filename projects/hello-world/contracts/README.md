@@ -9,7 +9,7 @@ For a detailed tutorial on how to write a consumer contract, refer to the [tutor
 
 > [!IMPORTANT]
 > Ensure that you are running the following scripts with the Infernet Anvil Testnet network.
-> The [tutorial](../hello-world) at the root of this repository explains how to
+> The [tutorial](../hello-world.md) at the root of this repository explains how to
 > bring up an infernet node.
 
 ### Installing the libraries

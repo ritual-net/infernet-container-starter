@@ -147,7 +147,7 @@ cd infernet-container-starter
 
 ### Configure the UI Service
 You'll need to configure the UI service to point to the `tgi` service. To do this, you'll have to
-pass that info as environemnt variables. There exists a [`gradio_ui.env.sample`](./ui/gradio_ui.env.sample)
+pass that info as environment variables. There exists a [`gradio_ui.env.sample`](./ui/gradio_ui.env.sample)
 file in the [`projects/tgi-llm/ui`](./ui)
 directory. Simply copy this file to `gradio_ui.env` and set the `TGI_SERVICE_URL` to the address of the `tgi` service.
 
