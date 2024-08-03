@@ -7,7 +7,7 @@ This readme explains how to compile and deploy the contract to the Infernet Anvi
 
 > [!IMPORTANT]
 > Ensure that you are running the following scripts with the Infernet Anvil Testnet network.
-> The [tutorial](../../hello-world/README.mdADME.md) at the root of this repository explains how to
+> The [tutorial](../../hello-world/hello-world.md) at the root of this repository explains how to
 > bring up an infernet node.
 
 ### Installing the libraries
