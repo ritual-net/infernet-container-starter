@@ -45,3 +45,6 @@ remote_sync
 
 # secrets
 *-key.json
+
+# Virtual envs
+**/env/**

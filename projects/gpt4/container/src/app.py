@@ -28,12 +28,15 @@ def create_app() -> Quart:
             data: dict[str, Any]
         """
         req_data: dict[str, Any] = await request.get_json()
-        onchain_source = True if req_data.get("source") == "0" else False
-        onchain_destination = True if req_data.get("destination") == "0" else False
+        onchain_source = True if req_data.get("source") == 0 else False
+        onchain_destination = True if req_data.get("destination") == 0 else False
         data = req_data.get("data")
 
         if onchain_source:
-            """ For on-chain requests, the prompt is sent as a generalized hex-string which we will decode to the appropriate format. """
+            """
+            For on-chain requests, the prompt is sent as a generalized hex-string
+            which we will decode to the appropriate format. 
+            """
             # On-chain requests are sent as a generalized hex-string which we will
             # decode to the appropriate format.
             (prompt,) = decode(
@@ -49,7 +52,7 @@ def create_app() -> Quart:
             "https://api.openai.com/v1/chat/completions",
             headers={
                 "Content-Type": "application/json",
-                "Authorization": f"Bearer {os.environ["OPENAI_API_KEY"]}",
+                "Authorization": f"Bearer {os.environ['OPENAI_API_KEY']}",
             },
             json={
                 "model": "gpt-4-0613",

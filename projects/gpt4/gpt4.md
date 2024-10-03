@@ -156,7 +156,7 @@ able to make an infernet request.
 
 **Anvil Logs**: First, it's useful to look at the logs of the anvil node to see what's
 going on. In a new terminal, run
-`docker logs -f anvil-node`.
+`docker logs -f infernet-anvil`.
 
 **Deploying the contracts**: In another terminal, run the following command:
 
