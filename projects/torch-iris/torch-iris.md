@@ -289,4 +289,4 @@ infernet-node as well as a smart contract.
 1. Check out our [ONNX example](../onnx-iris/onnx-iris.md) if you haven't already.
 2. [Infernet Callback Consumer Tutorial](https://docs.ritual.net/infernet/sdk/consumers/Callback)
 3. [Infernet Nodes Docoumentation](https://docs.ritual.net/infernet/node/introduction)
-4. [Infernet-Compatible Containers](https://docs.ritual.net/infernet/node/containers)
+4. [Infernet-Compatible Containers](https://docs.ritual.net/infernet/node/advanced/containers)
