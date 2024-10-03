@@ -95,8 +95,8 @@ def create_app() -> Quart:
                     "processed_output": str,
                     "proof": str,
                 }
-                refer to: https://docs.ritual.net/infernet/node/advanced/containers for more
-                info.
+                refer to: https://docs.ritual.net/infernet/node/advanced/containers for
+                more info.
                 """
                 predictions = result[0]
                 predictions_normalized = [int(p * 1e6) for p in predictions.values]

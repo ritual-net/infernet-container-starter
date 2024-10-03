@@ -175,7 +175,7 @@ an [infernet anvil node](projects/hello-world/README.mdllo-world/README.md#77) w
 logs of the anvil node to see what's going on. In a new terminal, run:
 
 ```bash
-docker logs -f anvil-node
+docker logs -f infernet-anvil
 ```
 
 As you deploy the contract and make requests, you should see logs indicating the

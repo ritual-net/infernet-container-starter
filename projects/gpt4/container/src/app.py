@@ -35,15 +35,13 @@ def create_app() -> Quart:
         if onchain_source:
             """
             For on-chain requests, the prompt is sent as a generalized hex-string
-            which we will decode to the appropriate format. 
+            which we will decode to the appropriate format.
             """
             # On-chain requests are sent as a generalized hex-string which we will
             # decode to the appropriate format.
-            (prompt,) = decode(
-                ["string"], bytes.fromhex(cast(str, data))
-            )
+            (prompt,) = decode(["string"], bytes.fromhex(cast(str, data)))
         else:
-            """ For off-chain requests, the prompt is sent as is. """
+            """For off-chain requests, the prompt is sent as is."""
             prompt = cast(dict[str, Any], data).get("prompt")
 
         # Make request to the OpenAI API to get a completion of the prompt.
@@ -58,9 +56,9 @@ def create_app() -> Quart:
                 "model": "gpt-4-0613",
                 "messages": [
                     {"role": "system", "content": "you are a helpful assistant."},
-                    {"role": "user", "content": cast(str, prompt)}
+                    {"role": "user", "content": cast(str, prompt)},
                 ],
-            }
+            },
         )
 
         # Ensure the request was successful, and get the result.

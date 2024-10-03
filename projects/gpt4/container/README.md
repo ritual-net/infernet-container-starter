@@ -1,5 +1,5 @@
 # GPT 4
-In this example, we run a minimalist container that makes use of the OpenAI [completions API](https://platform.openai.com/docs/api-reference/chat) to serve text generation requests. 
+In this example, we run a minimalist container that makes use of the OpenAI [completions API](https://platform.openai.com/docs/api-reference/chat) to serve text generation requests.
 
 ## Requirements
 To use the model you'll need to have an OpenAI API key. Get one on [OpenAI](https://openai.com/)'s website.

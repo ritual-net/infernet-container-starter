@@ -94,8 +94,8 @@ def create_app() -> Quart:
                     "processed_output": str,
                     "proof": str,
                 }
-                refer to: https://docs.ritual.net/infernet/node/advanced/containers for more
-                info.
+                refer to: https://docs.ritual.net/infernet/node/advanced/containers for
+                more info.
                 """
                 return {
                     "raw_input": infernet_input.data,
