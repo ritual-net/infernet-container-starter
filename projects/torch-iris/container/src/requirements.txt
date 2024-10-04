@@ -1,7 +1,6 @@
-quart==0.19.4
-infernet-ml==1.0.0
-infernet-ml[torch_inference]==1.0.0
 huggingface-hub==0.17.3
+numpy==1.26.4
+quart==0.19.4
 sk2torch==1.2.0
 torch==2.2.1
 web3==6.15.0

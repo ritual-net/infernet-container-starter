@@ -13,10 +13,6 @@ types-Werkzeug==1.0.9
 typing_extensions==4.9.0
 Flask==3.0.0
 quart==0.19.4
-infernet-ml==1.0.0
-infernet-ml[torch_inference]==1.0.0
-infernet-ml[onnx_inference]==1.0.0
-infernet-ml[css_inference]==1.0.0
 torch==2.2.1
 web3==6.15.0
 onnx==1.16.1

@@ -1,7 +1,7 @@
 # Running an ONNX model
 
-In this example, we will serve a pre-trained model to classify iris flowers via the ONNX runntime. The code for the model
-is located at our [simple-ml-models](https://github.com/ritual-net/simple-ml-models/tree/main/iris_classification) repository.
+In this example, we will serve a pre-trained model to classify iris flowers via the ONNX runtime. The code for the model
+is located in our [simple-ml-models](https://github.com/ritual-net/simple-ml-models/tree/main/iris_classification) repository.
 
 This container is meant to be started by the Infernet Node. For development and
 testing purposes, you can run the container in isolation using the following commands.
@@ -69,13 +69,13 @@ By running the above command, you should get a response similar to the following
 }
 ```
 
-The response corresponds to the model's prediction for each of the classes:
+The values correspond to the model's prediction for each of the classes:
 
 ```python
 ['setosa', 'versicolor', 'virginica']
 ```
 
-In this case, the model predicts that the input corresponds to the class `virginica`with
+In this case, the model predicts that the input corresponds to the class `virginica` with
 a probability of `0.9845937490463257` (~98.5%).
 
 ## Next steps

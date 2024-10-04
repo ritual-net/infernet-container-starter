@@ -1,23 +1,7 @@
 # Iris Classification via Torch
 
-This example uses a pre-trained model to classify iris flowers. The code for the model
-is located at
-our [simple-ml-models](https://github.com/ritual-net/simple-ml-models/tree/main/iris_classification)
-repository.
-
-## Overview
-
-We're making use of
-the [TorchInferenceWorkflow](https://github.com/ritual-net/infernet-ml/blob/main/src/ml/workflows/inference/torch_inference_workflow.py)
-class to run the model. This is one of many workflows that we currently support in our
-[infernet-ml](https://github.com/ritual-net/infernet-ml). Consult the library's
-documentation for more info on workflows that
-are supported.
-
-## Building & Running the Container in Isolation
-
-Note that this container is meant to be started by the infernet-node. For development &
-testing purposes, you can run the container in isolation using the following commands.
+In this example, we will serve a pre-trained model to classify iris flowers via Torch.
+The code for the model is located in our [simple-ml-models](https://github.com/ritual-net/simple-ml-models/tree/main/iris_classification) repository.
 
 ### Building the Container
 
@@ -63,9 +47,8 @@ Putting this input into a vector and scaling it, we get the following scaled inp
 [1.0380048, 0.5586108, 1.1037828, 1.712096]
 ```
 
-Refer
-to [this function in the model's repository](https://github.com/ritual-net/simple-ml-models/blob/03ebc6fb15d33efe20b7782505b1a65ce3975222/iris_classification/iris_inference_pytorch.py#L13)
-for more information on how the input is scaled.
+Refer to [this function in the model's repository](https://github.com/ritual-net/simple-ml-models/blob/03ebc6fb15d33efe20b7782505b1a65ce3975222/iris_classification/iris_inference_pytorch.py#L13) for more information on how the input
+is scaled.
 
 For more context on the Iris dataset, refer to
 the [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/iris).
@@ -76,35 +59,27 @@ By running the above command, you should get a response similar to the following
 
 ```json
 {
-  "input_data": [
-    [
-      1.0380048,
-      0.5586108,
-      1.1037828,
-      1.712096
-    ]
-  ],
-  "input_shapes": [
-    [
-      4
-    ]
-  ],
-  "output_data": [
-    [
-      0.0016699483385309577,
-      0.021144982427358627,
-      0.977185070514679
-    ]
+  "output": [
+    0.0016699483385309577,
+    0.02114497311413288,
+    0.977185070514679
   ]
 }
 ```
 
-The `output_data` corresponds to the model's prediction for each of the classes:
+The values correspond to the model's prediction for each of the classes:
 
 ```python
 ['setosa', 'versicolor', 'virginica']
 ```
 
-In this case, the model predicts that the input corresponds to the class `virginica`
-with
-a probability of `0.977185070514679` (97.7%).
+In this case, the model predicts that the input corresponds to the class `virginica` with
+a probability of `0.977185070514679` (~97.7%).
+
+## Next steps
+
+This container is for demonstration purposes only, and is purposefully simplified for readability and ease of comprehension. For a production-ready version of this code, check out:
+
+- The [Torch Inference Workflow](https://infernet-ml.docs.ritual.net/reference/infernet_ml/workflows/inference/torch_inference_workflow): A Python class that can run any Torch model from a variety of storage sources.
+- The [Torch Inference Service](https://infernet-services.docs.ritual.net/reference/torch_inference_service): A production-ready, [Infernet](https://docs.ritual.net/infernet/node/introduction)-compatible container that works out-of-the-box
+with minimal configuration, and serves Torch inference using the `Torch Inference Workflow`.
