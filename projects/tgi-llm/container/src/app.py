@@ -42,7 +42,6 @@ def create_app() -> Quart:
             """For off-chain requests, the prompt is sent as is."""
             prompt = cast(dict[str, Any], data).get("prompt")
 
-
         service_url = os.environ["TGI_SERVICE_URL"]
         client = Client(service_url, timeout=30)
         reponse = client.generate(cast(str, prompt))
@@ -74,7 +73,6 @@ def create_app() -> Quart:
             For off-chain request, the result is returned as is.
             """
             return {"data": content}
-
 
     return app
 

@@ -1,19 +1,11 @@
 import logging
 from typing import Any, cast, List
 
-from infernet_ml.utils.common_types import TensorInput
-import numpy as np
 from eth_abi import decode, encode  # type: ignore
-from infernet_ml.utils.model_loader import (
-    HFLoadArgs,
-    ModelSource,
-)
-from infernet_ml.utils.service_models import InfernetInput, JobLocation
-from infernet_ml.workflows.inference.onnx_inference_workflow import (
-    ONNXInferenceWorkflow,
-    ONNXInferenceInput,
-    ONNXInferenceResult,
-)
+from huggingface_hub import hf_hub_download  # type: ignore
+import numpy as np
+import onnx
+from onnxruntime import InferenceSession  # type: ignore
 from quart import Quart, request
 from quart.json.provider import DefaultJSONProvider
 
@@ -33,14 +25,10 @@ class NumpyJsonEncodingProvider(DefaultJSONProvider):
 def create_app() -> Quart:
     Quart.json_provider_class = NumpyJsonEncodingProvider
     app = Quart(__name__)
-    # we are downloading the model from the hub.
-    # model repo is located at: https://huggingface.co/Ritual-Net/iris-dataset
 
-    workflow = ONNXInferenceWorkflow(
-        model_source=ModelSource.HUGGINGFACE_HUB,
-        load_args=HFLoadArgs(repo_id="Ritual-Net/iris-dataset", filename="iris.onnx"),
-    )
-    workflow.setup()
+    # Model repo is located at: https://huggingface.co/Ritual-Net/iris-dataset
+    REPO_ID = "Ritual-Net/iris-dataset"
+    FILENAME = "iris.onnx"
 
     @app.route("/")
     def index() -> str:
@@ -51,43 +39,65 @@ def create_app() -> Quart:
 
     @app.route("/service_output", methods=["POST"])
     async def inference() -> Any:
-        req_data = await request.get_json()
         """
-        InfernetInput has the format:
+        Input data has the format:
             source: (0 on-chain, 1 off-chain)
+            destination: (0 on-chain, 1 off-chain)
             data: dict[str, Any]
         """
-        infernet_input: InfernetInput = InfernetInput(**req_data)
+        req_data: dict[str, Any] = await request.get_json()
+        onchain_source = True if req_data.get("source") == 0 else False
+        onchain_destination = True if req_data.get("destination") == 0 else False
+        data = req_data.get("data")
 
-        match infernet_input:
-            case InfernetInput(source=JobLocation.OFFCHAIN):
-                web2_input = cast(dict[str, Any], infernet_input.data)
-                values = cast(List[List[float]], web2_input["input"])
-            case InfernetInput(source=JobLocation.ONCHAIN):
-                web3_input: List[int] = decode(
-                    ["uint256[]"], bytes.fromhex(cast(str, infernet_input.data))
-                )[0]
-                values = [[float(v) / 1e6 for v in web3_input]]
+        if onchain_source:
+            """
+            For on-chain requests, the prompt is sent as a generalized hex-string
+            which we will decode to the appropriate format.
+            """
+            web3_input: List[int] = decode(
+                ["uint256[]"], bytes.fromhex(cast(str, data))
+            )[0]
+            values = [[float(v) / 1e6 for v in web3_input]]
+        else:
+            """For off-chain requests, the input is sent as is."""
+            web2_input = cast(dict[str, Any], data)
+            values = cast(list[list[float]], web2_input["input"])
 
-        """
-        The input to the onnx inference workflow needs to conform to ONNX runtime's
-        input_feed format. For more information refer to:
-        https://docs.ritual.net/ml-workflows/inference-workflows/onnx_inference_workflow
-        """
-        _input = ONNXInferenceInput(
-            inputs={"input": TensorInput(shape=(1, 4), dtype="float", values=values)},
+        # Prepare the input data for the model
+        dtype = cast(np.dtype[np.float32], "float32")
+        shape = (len(values), len(values[0]))
+
+        # Download the model from the hub
+        path = hf_hub_download(repo_id=REPO_ID, filename=FILENAME, force_download=False)
+        model = onnx.load(path)
+        onnx.checker.check_model(model)
+        session = InferenceSession(path)
+        output_names = [output.name for output in model.graph.output]
+
+        # Run the model
+        outputs = session.run(
+            output_names,
+            {
+                "input": np.array(
+                    values,
+                    dtype=dtype,
+                ).reshape(shape)
+            },
         )
-        result: ONNXInferenceResult = workflow.inference(_input)
 
-        match infernet_input:
-            case InfernetInput(destination=JobLocation.OFFCHAIN):
-                """
-                In case of an off-chain request, the result is returned as is.
-                """
-                return result
-            case InfernetInput(destination=JobLocation.ONCHAIN):
-                """
-                In case of an on-chain request, the result is returned in the format:
+        # Get the predictions
+        output = outputs[0]
+        predictions = {
+            "values": output.flatten(),
+            "dtype": "float32",
+            "shape": output.shape,
+        }
+
+        # Depending on the destination, the result is returned in a different format.
+        if onchain_destination:
+            """
+            For on-chain requests, the result is returned in the format:
                 {
                     "raw_input": str,
                     "processed_input": str,
@@ -95,20 +105,22 @@ def create_app() -> Quart:
                     "processed_output": str,
                     "proof": str,
                 }
-                refer to: https://docs.ritual.net/infernet/node/advanced/containers for
-                more info.
-                """
-                predictions = result[0]
-                predictions_normalized = [int(p * 1e6) for p in predictions.values]
-                return {
-                    "raw_input": "",
-                    "processed_input": "",
-                    "raw_output": encode(["uint256[]"], [predictions_normalized]).hex(),
-                    "processed_output": "",
-                    "proof": "",
-                }
-            case _:
-                raise ValueError("Invalid destination")
+            refer to: https://docs.ritual.net/infernet/node/advanced/containers for more
+            info.
+            """
+            predictions_normalized = [int(p * 1e6) for p in predictions["values"]]
+            return {
+                "raw_input": "",
+                "processed_input": "",
+                "raw_output": encode(["uint256[]"], [predictions_normalized]).hex(),
+                "processed_output": "",
+                "proof": "",
+            }
+        else:
+            """
+            For off-chain request, the result is returned as is.
+            """
+            return {"output": predictions["values"]}
 
     return app
 

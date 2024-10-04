@@ -3,12 +3,12 @@
 Welcome to the first tutorial of Infernet! In this tutorial we will guide you through the process of setting up and
 running an Infernet Node, and then demonstrate how to create and monitor off-chain compute jobs and on-chain subscriptions.
 
-To interact with infernet, one could either create a job by accessing an infernet node directly through it's API (we'll
+To interact with infernet, one could either create a job by accessing an Infernet Node directly through it's API (we'll
 refer to this as an off-chain job), or by creating a subscription on-chain (we'll refer to this as an on-chain job).
 
 ## Requesting an off-chain job: Hello World!
 
-This project is a simple [flask-app](container/src/app.py) that is compatible with `infernet`, and simply
+This project is a simple [flask-app](container/src/app.py) that is compatible with Infernet, and simply
 [echoes what you send to it](container/src/app.py#L16).
 
 ### Install Docker & Verify Installation
@@ -42,11 +42,11 @@ make build-container project=hello-world
 
 Then, from the top-level project directory, Run the following make command:
 
-```
+```bash
 make deploy-container project=hello-world
 ```
 
-This will deploy an infernet node along with the `hello-world` image.
+This will deploy an Infernet Node along with the `hello-world` image.
 
 ### Creating an off-chain job through the API
 
@@ -107,11 +107,11 @@ In another terminal, run `docker container ls`, you should see something like th
 
 ```bash
 CONTAINER ID   IMAGE                                      COMMAND                  CREATED          STATUS          PORTS                                NAMES
-c2ca0ffe7817   ritualnetwork/infernet-anvil:0.0.0         "anvil --host 0.0.0.…"   9 seconds ago    Up 8 seconds    0.0.0.0:8545->3000/tcp               anvil-node
+c2ca0ffe7817   ritualnetwork/infernet-anvil:1.0.0         "anvil --host 0.0.0.…"   9 seconds ago    Up 8 seconds    0.0.0.0:8545->3000/tcp               infernet-anvil
 0b686a6a0e5f   ritualnetwork/hello-world-infernet:0.0.2   "gunicorn app:create…"   9 seconds ago    Up 8 seconds    0.0.0.0:3000->3000/tcp               hello-world
-28b2e5608655   ritualnetwork/infernet-node:0.1.1          "/app/entrypoint.sh"     10 seconds ago   Up 10 seconds   0.0.0.0:4000->4000/tcp               deploy-node-1
-03ba51ff48b8   fluent/fluent-bit:latest                   "/fluent-bit/bin/flu…"   10 seconds ago   Up 10 seconds   2020/tcp, 0.0.0.0:24224->24224/tcp   deploy-fluentbit-1
-a0d96f29a238   redis:latest                               "docker-entrypoint.s…"   10 seconds ago   Up 10 seconds   0.0.0.0:6379->6379/tcp               deploy-redis-1
+28b2e5608655   ritualnetwork/infernet-node:1.3.1          "/app/entrypoint.sh"     10 seconds ago   Up 10 seconds   0.0.0.0:4000->4000/tcp               deploy-node-1
+03ba51ff48b8   fluent/fluent-bit:latest                   "/fluent-bit/bin/flu…"   10 seconds ago   Up 10 seconds   2020/tcp, 0.0.0.0:24224->24224/tcp   infernet-fluentbit
+a0d96f29a238   redis:latest                               "docker-entrypoint.s…"   10 seconds ago   Up 10 seconds   0.0.0.0:6379->6379/tcp               infernet-redis
 ```
 
 You can see that the anvil node is running on port `8545`, and the infernet
@@ -125,7 +125,7 @@ All this contract does is to request a job from the infernet node, and upon rece
 the result, it will use the `forge` console to print the result.
 
 **Anvil Logs**: First, it's useful to look at the logs of the anvil node to see what's going on. In
-a new terminal, run `docker logs -f anvil-node`.
+a new terminal, run `docker logs -f infernet-anvil`.
 
 **Deploying the contracts**: In another terminal, run the following command:
 
