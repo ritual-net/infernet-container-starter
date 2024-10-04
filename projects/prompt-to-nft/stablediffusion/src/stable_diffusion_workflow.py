@@ -4,18 +4,18 @@ from typing import Any
 import torch
 from diffusers import DiffusionPipeline
 from huggingface_hub import snapshot_download
-from infernet_ml.workflows.inference.base_inference_workflow import (
-    BaseInferenceWorkflow,
-)
 
 
-class StableDiffusionWorkflow(BaseInferenceWorkflow):
+class StableDiffusionWorkflow:
     def __init__(
         self,
         *args: Any,
         **kwargs: Any,
     ):
-        super().__init__(*args, **kwargs)
+        self.args: list[Any] = list(args)
+        self.kwargs: dict[Any, Any] = kwargs
+
+        self.is_setup = False
 
     def do_setup(self) -> Any:
         ignore = [
