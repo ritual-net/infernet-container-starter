@@ -64,13 +64,13 @@ make deploy-container project=tgi-llm
 
 You can test the infernet node by posting a job in the node's REST api.
 
-```bash
+```bash copy
 curl -X POST "http://127.0.0.1:4000/api/jobs" \
    -H "Content-Type: application/json" \
-   -d '{"containers":["tgi-llm"], "data": {"prompt": "can shrimp actually fry rice?"}}'
+   -d '{"containers": ["tgi-llm"], "data": {"prompt": "can shrimp actually fry rice?"}}'
 ```
 
-You can expect a response similar to the following:
+which should return something like this:
 
 ```json
 {
@@ -80,9 +80,26 @@ You can expect a response similar to the following:
 
 You can then check the status of the job using the following command:
 
-```bash
+```bash copy
 curl -X GET http://127.0.0.1:4000/api/jobs\?id\=f026c7c2-7027-4c2d-b662-2b48c9433a12
-[{"id":"f026c7c2-7027-4c2d-b662-2b48c9433a12","result":{"container":"tgi-llm","output":{"output":"\n\nI\u2019m not sure if this is a real question or not, but I\u2019m"}},"status":"success"}]
+```
+
+You can expect a response similar to the following:
+
+```
+# [
+#   {
+#     "id":"f026c7c2-7027-4c2d-b662-2b48c9433a12",
+#     "result": {
+#       "container": "tgi-llm",
+#       "output": 
+#         {
+#           "output": "\n\nI\u2019m not sure if this is a real question or not, but I\u2019m"
+#         }
+#       },
+#     "status": "success"
+#   }
+# ]
 ```
 
 Congratulations! You've successfully ran an infernet node with a TGI service.

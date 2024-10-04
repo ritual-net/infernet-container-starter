@@ -37,8 +37,6 @@ def create_app() -> Quart:
             For on-chain requests, the prompt is sent as a generalized hex-string
             which we will decode to the appropriate format.
             """
-            # On-chain requests are sent as a generalized hex-string which we will
-            # decode to the appropriate format.
             (prompt,) = decode(["string"], bytes.fromhex(cast(str, data)))
         else:
             """For off-chain requests, the prompt is sent as is."""
@@ -46,11 +44,12 @@ def create_app() -> Quart:
 
         # Make request to the OpenAI API to get a completion of the prompt.
         # See https://platform.openai.com/docs/api-reference/chat for more info.
+        api_key = os.environ["OPENAI_API_KEY"]
         response = requests.post(
             "https://api.openai.com/v1/chat/completions",
             headers={
                 "Content-Type": "application/json",
-                "Authorization": f"Bearer {os.environ['OPENAI_API_KEY']}",
+                "Authorization": f"Bearer {api_key}",
             },
             json={
                 "model": "gpt-4-0613",
@@ -70,13 +69,13 @@ def create_app() -> Quart:
         if onchain_destination:
             """
             For on-chain requests, the result is returned in the format:
-            {
-                "raw_input": str,
-                "processed_input": str,
-                "raw_output": str,
-                "processed_output": str,
-                "proof": str,
-            }
+                {
+                    "raw_input": str,
+                    "processed_input": str,
+                    "raw_output": str,
+                    "processed_output": str,
+                    "proof": str,
+                }
             refer to: https://docs.ritual.net/infernet/node/advanced/containers for more
             info.
             """

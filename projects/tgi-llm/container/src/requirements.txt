@@ -1,5 +1,4 @@
 quart==0.19.4
-infernet-ml==1.0.0
-infernet-ml[tgi_inference]==1.0.0
 web3==6.15.0
 retry2==0.9.5
+text-generation==0.7.0

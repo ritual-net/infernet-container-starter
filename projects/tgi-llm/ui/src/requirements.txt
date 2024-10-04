@@ -1,4 +1,4 @@
 python-dotenv==1.0.0
 gradio==4.36.0
 huggingface-hub==0.17.3
-text-generation==2.0.0
+text-generation==0.7.0
