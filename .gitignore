@@ -48,3 +48,6 @@ remote_sync
 
 # Virtual envs
 **/env/**
+
+# Arweave keyfile
+keyfile-*.json

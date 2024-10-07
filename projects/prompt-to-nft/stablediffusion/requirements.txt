@@ -1,5 +1,7 @@
+accelerate==1.0.0
 diffusers~=0.19
 huggingface-hub==0.23.0
+numpy==1.26.4
 quart==0.19.4
 safetensors~=0.3
 torch==2.2.1
