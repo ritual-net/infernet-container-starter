@@ -18,7 +18,7 @@ ADD https://astral.sh/uv/install.sh /install.sh
 RUN chmod 755 /install.sh
 RUN /install.sh && rm /install.sh
 
-COPY src/requirements.txt .
+COPY requirements.txt .
 
 RUN /root/.cargo/bin/uv pip install --system --no-cache -r requirements.txt
 

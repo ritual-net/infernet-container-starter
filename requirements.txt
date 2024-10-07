@@ -18,3 +18,5 @@ web3==6.15.0
 onnx==1.16.1
 onnxruntime==1.17.1
 pre-commit==2.15.0
+python-dotenv==1.0.0
+ritual-arweave==0.1.0
