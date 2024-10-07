@@ -6,9 +6,9 @@ is located in our [simple-ml-models](https://github.com/ritual-net/simple-ml-mod
 This container is meant to be started by the Infernet Node. For development and
 testing purposes, you can run the container in isolation using the following commands.
 
-### Building the Container
+### Build the Container
 
-Simply run the following command to build the container.
+Simply run the following command to build the container:
 
 ```bash
 make build
@@ -16,7 +16,7 @@ make build
 
 Consult the [Makefile](./Makefile) for the build command.
 
-### Running the Container
+### Run the Container
 
 To run the container, you can use the following command:
 
@@ -24,9 +24,9 @@ To run the container, you can use the following command:
 make run
 ```
 
-## Testing the Container
+## Test the Container
 
-Run the following command to run an inference:
+You can test the container by making inference requests directly via your terminal:
 
 ```bash
 curl -X POST http://127.0.0.1:3000/service_output \
@@ -82,6 +82,5 @@ a probability of `0.9845937490463257` (~98.5%).
 
 This container is for demonstration purposes only, and is purposefully simplified for readability and ease of comprehension. For a production-ready version of this code, check out:
 
-- The [ONNX Inference Workflow](https://infernet-ml.docs.ritual.net/reference/infernet_ml/workflows/inference/onnx_inference_workflow): A Python class that can run any ONNX model from a variety of storage sources.
-- The [ONNX Inference Service](https://infernet-services.docs.ritual.net/reference/onnx_inference_service): A production-ready, [Infernet](https://docs.ritual.net/infernet/node/introduction)-compatible container that works out-of-the-box
-with minimal configuration, and serves ONNX inference using the `ONNX Inference Workflow`.
+- The [ONNX Inference Workflow](https://infernet-ml.docs.ritual.net/reference/infernet_ml/workflows/inference/onnx_inference_workflow): A Python class that runs any ONNX model from a variety of storage sources.
+- The [ONNX Inference Service](https://infernet-services.docs.ritual.net/reference/onnx_inference_service): A production-ready, [Infernet](https://docs.ritual.net/infernet/node/introduction)-compatible container that works out-of-the-box with minimal configuration, and serves ONNX inference using the `ONNX Inference Workflow`.

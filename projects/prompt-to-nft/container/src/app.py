@@ -72,7 +72,9 @@ def create_app() -> Quart:
         # run the inference and download the image to a temp file
         await run_inference(prompt, temp_file)
 
-        wallet_path = os.environ.get("ARWEAVE_WALLET_FILE_PATH", "wallet/keyfile-arweave.json")
+        wallet_path = os.environ.get(
+            "ARWEAVE_WALLET_FILE_PATH", "wallet/keyfile-arweave.json"
+        )
         tx = FileManager(wallet_path=wallet_path).upload(
             Path(temp_file), {"Content-Type": "image/png"}
         )

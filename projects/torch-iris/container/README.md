@@ -1,11 +1,12 @@
 # Iris Classification via Torch
 
-In this example, we will serve a pre-trained model to classify iris flowers via Torch.
-The code for the model is located in our [simple-ml-models](https://github.com/ritual-net/simple-ml-models/tree/main/iris_classification) repository.
+In this example, we will serve a pre-trained model to classify iris flowers via Torch. The code for the model is located in our [simple-ml-models](https://github.com/ritual-net/simple-ml-models/tree/main/iris_classification) repository.
 
-### Building the Container
+Check out the full tutorial [here](https://learn.ritual.net/examples/running_a_torch_model).
 
-Simply run the following command to build the container.
+### Build the Container
+
+Simply run the following command to build the container:
 
 ```bash
 make build
@@ -13,7 +14,7 @@ make build
 
 Consult the [Makefile](./Makefile) for the build command.
 
-### Running the Container
+### Run the Container
 
 To run the container, you can use the following command:
 
@@ -21,9 +22,9 @@ To run the container, you can use the following command:
 make run
 ```
 
-## Testing the Container
+## Test the Container
 
-Run the following command to perform an inference:
+You can test the container by making inference requests directly via your terminal:
 
 ```bash
 curl -X POST "http://127.0.0.1:3000/service_output" \
@@ -80,6 +81,5 @@ a probability of `0.977185070514679` (~97.7%).
 
 This container is for demonstration purposes only, and is purposefully simplified for readability and ease of comprehension. For a production-ready version of this code, check out:
 
-- The [Torch Inference Workflow](https://infernet-ml.docs.ritual.net/reference/infernet_ml/workflows/inference/torch_inference_workflow): A Python class that can run any Torch model from a variety of storage sources.
-- The [Torch Inference Service](https://infernet-services.docs.ritual.net/reference/torch_inference_service): A production-ready, [Infernet](https://docs.ritual.net/infernet/node/introduction)-compatible container that works out-of-the-box
-with minimal configuration, and serves Torch inference using the `Torch Inference Workflow`.
+- The [Torch Inference Workflow](https://infernet-ml.docs.ritual.net/reference/infernet_ml/workflows/inference/torch_inference_workflow): A Python class that runs any Torch model from a variety of storage sources.
+- The [Torch Inference Service](https://infernet-services.docs.ritual.net/reference/torch_inference_service): A production-ready, [Infernet](https://docs.ritual.net/infernet/node/introduction)-compatible container that works out-of-the-box with minimal configuration, and serves Torch inference using the `Torch Inference Workflow`.

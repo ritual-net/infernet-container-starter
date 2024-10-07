@@ -2,22 +2,31 @@
 
 In this example, we will run a minimalist container that makes use of the OpenAI [completions API](https://platform.openai.com/docs/api-reference/chat) to serve text generation requests.
 
+Check out the full tutorial [here](https://learn.ritual.net/examples/running_gpt_4).
+
 ## Requirements
 
 To use the model you'll need to have an OpenAI API key. Get one on [OpenAI](https://openai.com/)'s website.
 
-## Run the Container
+## Build the Container
 
-Build and run this container as follows:
+Simply run the following command to build the container:
 
 ```bash
 make build
+```
+
+## Run the Container
+
+To run the container, you can use the following command:
+
+```bash
 make run
 ```
 
 ## Test the Container
 
-You can test this container by making inference requests directly through your terminal:
+You can test the container by making inference requests directly via your terminal:
 
 ```bash
 curl -X POST localhost:3000/service_output -H "Content-Type: application/json" \

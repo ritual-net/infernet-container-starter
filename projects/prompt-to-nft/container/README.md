@@ -1,17 +1,17 @@
 # Prompt-to-NFT Container
 
+This container uses a remote StableDiffusion service to generate an image NFT, and stores it on [Arweave](https://docs.arweave.org). There are several components to running this example end-to-end, so we highly recommend you follow the full [Prompt to NFT](https://learn.ritual.net/examples/prompt_to_nft) instead.
 
-## Overview
+Check out the full tutorial [here](https://learn.ritual.net/examples/prompt_to_nft).
 
+### Requirements
 
-## Building & Running the Container in Isolation
+- An [Arweave](https://docs.arweave.org) key. Create a key file following the instructions [here](https://docs.arweave.org/developers/mining/mining-quickstart#creating-your-first-arweave-wallet). You should then place your `keyfile-arweave.json` under `projects/prompt-to-nft/container/wallet/`.
+- A Stable Diffusion service. You can use an API, or [deploy your own](https://learn.ritual.net/examples/prompt_to_nft#setting-up-a-stable-diffusion-service).
 
-Note that this container is meant to be started by the infernet-node. For development &
-Testing purposes, you can run the container in isolation using the following commands.
+### Build the Container
 
-### Building the Container
-
-Simply run the following command to build the container.
+Simply run the following command to build the container:
 
 ```bash
 make build
@@ -19,12 +19,11 @@ make build
 
 Consult the [Makefile](./Makefile) for the build command.
 
-### Adding Arweave File
-Add your arweave wallet file
+### Add the Arweave File
 
+Create an Arweave key file following the instructions [here](https://docs.arweave.org/developers/mining/mining-quickstart#creating-your-first-arweave-wallet). You should then place your `keyfile-arweave.json` file under `projects/prompt-to-nft/container/wallet/`.
 
-
-### Running the Container
+### Run the Container
 
 To run the container, you can use the following command:
 
@@ -32,60 +31,18 @@ To run the container, you can use the following command:
 make run
 ```
 
-## Testing the Container
+### Test the Container
 
-Run the following command to run an inference:
+You can test the container by making inference requests directly via your terminal:
 
 ```bash
 curl -X POST http://127.0.0.1:3000/service_output \
      -H "Content-Type: application/json" \
-     -d '{"source":1, "data": {"prompt": "a golden retriever skiing"}}'
+     -d '{"source": 1, "data": {"prompt": "a golden retriever skiing"}}'
 ```
 
-#### Note Regarding the Input
+## Next steps
 
-The inputs provided above correspond to an iris flower with the following
-characteristics. Refer to the
+This container is for demonstration purposes only, and is purposefully simplified for readability and ease of comprehension. For a production-ready version of this code, check out:
 
-1. Sepal Length: `5.5cm`
-2. Sepal Width: `2.4cm`
-3. Petal Length: `3.8cm`
-4. Petal Width: `1.1cm`
-
-Putting this input into a vector and scaling it, we get the following scaled input:
-
-```python
-[1.0380048, 0.5586108, 1.1037828, 1.712096]
-```
-
-Refer
-to [this function in the model's repository](https://github.com/ritual-net/simple-ml-models/blob/03ebc6fb15d33efe20b7782505b1a65ce3975222/iris_classification/iris_inference_pytorch.py#L13)
-for more information on how the input is scaled.
-
-For more context on the Iris dataset, refer to
-the [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/iris).
-
-### Output
-
-By running the above command, you should get a response similar to the following:
-
-```json
-[
-  [
-    [
-      0.0010151526657864451,
-      0.014391022734344006,
-      0.9845937490463257
-    ]
-  ]
-]
-```
-
-The response corresponds to the model's prediction for each of the classes:
-
-```python
-['setosa', 'versicolor', 'virginica']
-```
-
-In this case, the model predicts that the input corresponds to the class `virginica`with
-a probability of `0.9845937490463257`(~98.5%).
+- The [Stable Diffusion Workflow](https://infernet-ml.docs.ritual.net/reference/infernet_ml/workflows/inference/stable_diffusion_workflow/): A Python class that runs a Stable Diffusion pipeline to generate images given an input prompt.
