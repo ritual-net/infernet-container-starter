@@ -11,6 +11,12 @@ All notable changes to this project will be documented in this file.
 - Simplified examples to the minimum core functionality necessary and removed all dependencies on `infernet-ml`.
 - Updated images used for deploying the Infernet Node.
 
+## [1.0.2] - 2024-07-31
+
+### Changed
+- Set `trail_head_blocks` to `0` in `config.json` for all projects. This fixes an issue where the node would not start due to a lack of trailing blocks.
+- Updated `registry_address` to `0x663F3ad617193148711d28f5334eE4Ed07016602` to point to the correct registry address
+
 ## [1.0.1] - 2024-07-31
 
 ### Fixed

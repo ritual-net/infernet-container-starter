@@ -7,8 +7,8 @@ This readme explains how to compile and deploy the contract to the Infernet Anvi
 
 > [!IMPORTANT]
 > Ensure that you are running the following scripts with the Infernet Anvil Testnet network.
-> The [tutorial](../../hello-world/README.mdADME.md) at the root of this repository explains how to
-> bring up an infernet node.
+> Check out the [Torch tutorial](https://learn.ritual.net/examples/running_a_torch_model) for a walkthrough
+> of setting up and running an Infernet Node.
 
 ### Installing the libraries
 
