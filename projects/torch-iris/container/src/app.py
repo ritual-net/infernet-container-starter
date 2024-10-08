@@ -1,18 +1,10 @@
 import logging
-from typing import Any, cast, List
-from infernet_ml.utils.common_types import TensorInput
+from typing import Any, cast
 
 from eth_abi import decode, encode  # type: ignore
-from infernet_ml.utils.model_loader import (
-    HFLoadArgs,
-)
-from infernet_ml.utils.model_loader import ModelSource
-from infernet_ml.utils.service_models import InfernetInput, JobLocation
-from infernet_ml.workflows.inference.torch_inference_workflow import (
-    TorchInferenceWorkflow,
-    TorchInferenceInput,
-)
+from huggingface_hub import hf_hub_download  # type: ignore
 from quart import Quart, request
+import torch
 
 # Note: the IrisClassificationModel needs to be imported in this file for it to exist
 # in the classpath. This is because pytorch requires the model to be in the classpath.
@@ -24,13 +16,10 @@ log = logging.getLogger(__name__)
 
 def create_app() -> Quart:
     app = Quart(__name__)
-    # we are downloading the model from the hub.
-    # model repo is located at: https://huggingface.co/Ritual-Net/iris-dataset
-    workflow = TorchInferenceWorkflow(
-        model_source=ModelSource.HUGGINGFACE_HUB,
-        load_args=HFLoadArgs(repo_id="Ritual-Net/iris-dataset", filename="iris.torch"),
-    )
-    workflow.setup()
+
+    # Model repo is located at: https://huggingface.co/Ritual-Net/iris-dataset
+    REPO_ID = "Ritual-Net/iris-dataset"
+    FILENAME = "iris.torch"
 
     @app.route("/")
     def index() -> str:
@@ -43,61 +32,50 @@ def create_app() -> Quart:
 
     @app.route("/service_output", methods=["POST"])
     async def inference() -> dict[str, Any]:
-        req_data = await request.get_json()
         """
-        InfernetInput has the format:
+        Input data has the format:
             source: (0 on-chain, 1 off-chain)
+            destination: (0 on-chain, 1 off-chain)
             data: dict[str, Any]
         """
-        infernet_input: InfernetInput = InfernetInput(**req_data)
+        req_data: dict[str, Any] = await request.get_json()
+        onchain_source = True if req_data.get("source") == 0 else False
+        onchain_destination = True if req_data.get("destination") == 0 else False
+        data = req_data.get("data")
 
-        match infernet_input:
-            case InfernetInput(source=JobLocation.OFFCHAIN):
-                web2_input = cast(dict[str, Any], infernet_input.data)
-                values = cast(List[List[float]], web2_input["input"])
-            case InfernetInput(source=JobLocation.ONCHAIN):
-                web3_input: List[int] = decode(
-                    ["uint256[]"], bytes.fromhex(cast(str, infernet_input.data))
-                )[0]
-                values = [[float(v) / 1e6 for v in web3_input]]
-            case _:
-                raise ValueError("Invalid source")
+        if onchain_source:
+            """
+            For on-chain requests, the prompt is sent as a generalized hex-string
+            which we will decode to the appropriate format.
+            """
+            web3_input: list[int] = decode(
+                ["uint256[]"], bytes.fromhex(cast(str, data))
+            )[0]
+            values = [[float(v) / 1e6 for v in web3_input]]
+        else:
+            """For off-chain requests, the input is sent as is."""
+            web2_input = cast(dict[str, Any], data)
+            values = cast(list[list[float]], web2_input["input"])
 
-        """
-        The input to the torch inference workflow needs to conform to this format:
+        # Download the model from the hub
+        path = hf_hub_download(repo_id=REPO_ID, filename=FILENAME, force_download=False)
+        model = torch.load(path)
+        model.eval()
 
-        {
-            "dtype": str,
-            "values": list[Any]
+        # Run the model
+        output = model(torch.tensor(values, dtype=torch.float32))
+
+        # Get the predictions
+        predictions = {
+            "values": output.tolist(),
+            "dtype": str(output.dtype),
+            "shape": tuple(output.shape),
         }
 
-        For more information refer to:
-        https://infernet-ml.docs.ritual.net/reference/infernet_ml/workflows/inference/torch_inference_workflow/?h=torch
-
-        """  # noqa: E501
-        log.info("Input values: %s", values)
-
-        _input = TensorInput(
-            dtype="float",
-            shape=(1, 4),
-            values=values,
-        )
-
-        iris_inference_input = TorchInferenceInput(input=_input)
-
-        inference_result = workflow.inference(iris_inference_input)
-
-        result = inference_result.outputs
-
-        match infernet_input:
-            case InfernetInput(destination=JobLocation.OFFCHAIN):
-                """
-                In case of an off-chain request, the result is returned as is.
-                """
-                return {"result": result}
-            case InfernetInput(destination=JobLocation.ONCHAIN):
-                """
-                In case of an on-chain request, the result is returned in the format:
+        # Depending on the destination, the result is returned in a different format.
+        if onchain_destination:
+            """
+            For on-chain requests, the result is returned in the format:
                 {
                     "raw_input": str,
                     "processed_input": str,
@@ -105,19 +83,22 @@ def create_app() -> Quart:
                     "processed_output": str,
                     "proof": str,
                 }
-                refer to: https://docs.ritual.net/infernet/node/containers for more
-                info.
-                """
-                predictions_normalized = [int(p * 1e6) for p in result]
-                return {
-                    "raw_input": "",
-                    "processed_input": "",
-                    "raw_output": encode(["uint256[]"], [predictions_normalized]).hex(),
-                    "processed_output": "",
-                    "proof": "",
-                }
-            case _:
-                raise ValueError("Invalid destination")
+            refer to: https://docs.ritual.net/infernet/node/advanced/containers for more
+            info.
+            """
+            predictions_normalized = [int(p * 1e6) for p in predictions["values"][0]]
+            return {
+                "raw_input": "",
+                "processed_input": "",
+                "raw_output": encode(["uint256[]"], [predictions_normalized]).hex(),
+                "processed_output": "",
+                "proof": "",
+            }
+        else:
+            """
+            For off-chain request, the result is returned as is.
+            """
+            return {"output": predictions["values"][0]}
 
     return app
 

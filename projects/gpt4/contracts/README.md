@@ -2,7 +2,7 @@
 
 This is a minimalist foundry project that implements a [callback consumer](https://docs.ritual.net/infernet/sdk/consumers/Callback)
 that makes a prompt to the [container](../container/README.md), which then makes a call to OpenAI's GPT4. For an
-end-to-end flow of how this works, follow the [guide here](../gpt4.md).
+end-to-end flow of how this works, follow our [GPT4 tutorial](https://learn.ritual.net/examples/running_gpt_4).
 
 ## Deploying
 
