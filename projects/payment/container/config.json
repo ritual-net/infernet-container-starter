@@ -13,14 +13,15 @@
         "rpc_url": "http://host.docker.internal:8545",
         "registry_address": "0x663F3ad617193148711d28f5334eE4Ed07016602",
         "wallet": {
-            "max_gas_limit": 4000000,
-            "private_key": "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d",
-            "payment_address": "0x60985ee8192B322c3CAbA97A9A9f7298bdc4335C",
-            "allowed_sim_errors": []
+          "max_gas_limit": 4000000,
+          "private_key": "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d",
+          "allowed_sim_errors": []
         },
         "snapshot_sync": {
-            "sleep": 3,
-            "batch_size": 100
+          "sleep": 1.5,
+          "batch_size": 50,
+          "starting_sub_id": 0,
+          "sync_period": 1
         }
     },
     "startup_wait": 1.0,

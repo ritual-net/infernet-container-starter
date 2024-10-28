@@ -7,7 +7,7 @@ build-container:
 
 remove-containers:
 	docker compose -f deploy/docker-compose.yaml down || true
-	docker stop $(project) anvil-node && docker rm $(project) anvil-node || true
+	docker stop $(project) infernet-anvil && docker rm $(project) infernet-anvil || true
 
 build-multiplatform:
 	$(MAKE) -C ./projects/$(project)/container build-multiplatform

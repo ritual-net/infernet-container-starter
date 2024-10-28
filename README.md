@@ -14,6 +14,6 @@ model to infernet. Using this example will make it easier for you to deploy your
 4. [Prompt to NFT](projects/prompt-to-nft/prompt-to-nft.md): In this example, we use [stablediffusion](https://github.com/Stability-AI/stablediffusion) to
  mint NFTs on-chain using a prompt.
 5. [TGI Inference with Mistral-7b](projects/tgi-llm/tgi-llm.md): This example shows you how to deploy an arbitrary
-LLM model using [Huggingface's TGI](https://huggingface.co/docs/text-generation-inference/en/index), and use it with an infernet node.
+LLM model using [Huggingface's TGI](https://huggingface.co/docs/text-generation-inference/en/index), and use it with an Infernet Node.
 6. [Running OpenAI's GPT-4 on Infernet](projects/gpt4/gpt4.md): This example shows you how to deploy OpenAI's GPT-4 model
 to infernet.

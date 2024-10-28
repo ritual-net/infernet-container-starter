@@ -18,8 +18,10 @@
       "allowed_sim_errors": []
     },
     "snapshot_sync": {
-      "sleep": 3,
-      "batch_size": 100
+      "sleep": 1.5,
+      "batch_size": 50,
+      "starting_sub_id": 0,
+      "sync_period": 1
     }
   },
   "startup_wait": 1.0,
@@ -43,7 +45,7 @@
       "allowed_ips": [],
       "command": "--bind=0.0.0.0:3000 --workers=2",
       "env": {
-        "OPENAI_API_KEY": "your-key"
+        "OPENAI_API_KEY": "your-openai-key"
       },
       "volumes": [],
       "accepted_payments": {},

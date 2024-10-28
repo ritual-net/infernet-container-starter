@@ -1,4 +1,0 @@
-quart==0.19.4
-infernet-ml==1.0.0
-infernet-ml[css_inference]==1.0.0
-web3==6.15.0

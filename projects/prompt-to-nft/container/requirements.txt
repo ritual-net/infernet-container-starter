@@ -1,0 +1,4 @@
+quart==0.19.4
+ritual-arweave==0.1.0
+tqdm==4.66.4
+web3==6.15.0

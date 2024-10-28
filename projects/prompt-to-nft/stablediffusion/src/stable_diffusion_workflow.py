@@ -4,20 +4,20 @@ from typing import Any
 import torch
 from diffusers import DiffusionPipeline
 from huggingface_hub import snapshot_download
-from infernet_ml.workflows.inference.base_inference_workflow import (
-    BaseInferenceWorkflow,
-)
 
 
-class StableDiffusionWorkflow(BaseInferenceWorkflow):
+class StableDiffusionWorkflow:
     def __init__(
         self,
         *args: Any,
         **kwargs: Any,
     ):
-        super().__init__(*args, **kwargs)
+        self.args: list[Any] = list(args)
+        self.kwargs: dict[Any, Any] = kwargs
 
-    def do_setup(self) -> Any:
+        self.is_setup = False
+
+    def setup(self) -> Any:
         ignore = [
             "*.bin",
             "*.onnx_data",
@@ -35,7 +35,6 @@ class StableDiffusionWorkflow(BaseInferenceWorkflow):
             torch_dtype=torch.float16,
             use_safetensors=True,
             variant="fp16",
-            device_map="auto",
         )
 
         # Load base model
@@ -51,10 +50,9 @@ class StableDiffusionWorkflow(BaseInferenceWorkflow):
             **load_options,
         )
 
-    def do_preprocessing(self, input_data: dict[str, Any]) -> dict[str, Any]:
-        return input_data
+        self.is_setup = True
 
-    def do_run_model(self, input: dict[str, Any]) -> bytes:
+    def inference(self, input: dict[str, Any]) -> bytes:
         negative_prompt = input.get("negative_prompt", "disfigured, ugly, deformed")
         prompt = input["prompt"]
         n_steps = input.get("n_steps", 24)
@@ -81,6 +79,3 @@ class StableDiffusionWorkflow(BaseInferenceWorkflow):
         image_bytes = byte_stream.getvalue()
 
         return image_bytes
-
-    def do_postprocessing(self, input: Any, output: Any) -> Any:
-        return output
